@@ -1,0 +1,25 @@
+{
+  "name": "Maj-Kor",
+  "version": "1.0.0",
+  "description": "Integrated Majhong Service in Korea",
+  "main": "index.js",
+  "scripts": {
+    "test": "Hello Majhong"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahesm/Maj-Kor.git"
+  },
+  "keywords": [
+    "Maj"
+  ],
+  "author": "ahesm",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahesm/Maj-Kor/issues"
+  },
+  "homepage": "https://github.com/ahesm/Maj-Kor",
+  "dependencies": {
+    "express": "^4.12.3"
+  }
+}
