@@ -91,8 +91,10 @@ var then = Date.now();
 main();
 
 //socket===========================
+
 $(document).ready(function(){
  	var socket = io();
+ 	socket.emit('first');
    	$('.bt').click( function(){
    		socket.emit('msg', $('#m').val());
    		console.log($('#m').val());

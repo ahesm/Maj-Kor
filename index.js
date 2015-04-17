@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var http = require('http').Server(app);
 
 var jsonParser = bodyParser.json();
-var urlencodedParser = bodyParser.urlencoded({ extended: false});
+var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.get('/', function (req, res) {
 	res.sendfile( __dirname + '/front/login.html');
@@ -22,44 +22,40 @@ app.get('/image',function(req,res) {
 app.get('/keyboard',function(req,res) {
 	res.sendfile( __dirname + '/front/game/keyboard.js');
 });
-
-
+app.get('/room/:num', function(req, res) {
+	var num = req.params.num;
+	var addr = request.connection.remoteAddress;
+	if(room[num]===null){
+		room[num] = {
+			"player": 0,
+			"observer": 0,
+			"ready": 0,
+			"address": new Array()
+		}
+	}
+	room[num].address[room[num].player] = addr;
+	room[num].player<4?room[num].player++:room[num].obserber++;
+	//res.sendfile( __dirname + '/ready.html');
+});
 //Game================================================
-
-var group = new Array();
-var ccount = 0;
+var rooms = new Array();
 
 var io = require('socket.io')(http);
 io.on('connection',function(socket){
 	var address = socket.handshake.address;
-	console.log("connected");
-	group[ccount] = new Array();
-	group[ccount].player = new Array();
-	if(group[ccount]==null){
-		group[ccount] = {
-			"count": 0,
-		 	"game": false, 
-		 	"hanpan": new require("./back/hanpan"),
-		 	"player": new Array()
-		 };
-	}
-	if(group[ccount].player[address]==null){
-		group[ccount].plater[address] = {
-			"pae": group[ccount].hanpan.pcard[group[ccount].count]
-		};
-		console.log(group[ccount].player[address].pae);
-		group[ccount].count++;
-	}
-	if(group[ccount].count>=4){
+	console.log("connected: " + address);
+	socket.on('first',function(){
+		var room = {
 
-		group[ccount].game = true;
-		ccount++;
-	}
+		};
+		rooms.push(room);
+	});
+	
 	socket.on('msg', function(msg){
     	console.log('message: ' + msg);
     });
     socket.on('disconnect',function(){
-    	console.log("adsf");
+    	console.log("disconnect");
     })
 });
 
