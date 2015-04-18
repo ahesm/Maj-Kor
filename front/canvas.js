@@ -28,32 +28,20 @@ function gImage(){
 	};
 }
 
-//Keyboard===============================
-
-var Keys = {};
-addEventListener("keydown",function(e){
-	Keys[e.keyCode] = true;
-},false);
-
-addEventListener("keyup",function(e){	
-	Keys[e.keyCode] = false;
-},false);
-
-var key = function(){
-	if(38 in KeysDown){	
-		dot.y -= dot.speed;
-	}
-	if(40 in KeysDown){
-		dot.y += dot.speed;
-	}
-	if(37 in KeysDown){
-		dot.x -= dot.speed;
-	}
-	if(39 in KeysDown){
-		dot.x += dot.speed;
-	}
+//Init=============================
+var init = function(){
+	ctx.font="30px Verdana";
+	canvas.addEventListener('click',mouse,false);
 }
 
+//Click=============================
+var mouse = function(eve){
+	var x = eve.clientX - canvas.offsetLeft;
+	var y = eve.clientY - canvas.offsetTop;
+	if(x>10&&x<50&&y>50&&y<80){
+		
+	}
+}
 
 //Render===========================
 
@@ -66,21 +54,26 @@ bgImage.onload = function() {
 
 var render = function(){
 	ctx.clearRect(0,0,canvas.width,canvas.height);
-	
+	ctx.fillText("Ready",10,50);
 }
 
 
 //Loop===========================
-var loop = function(){
-	
+var loop1 = function(){
+
 }
 
+var loop2 = function(){
+
+}
 
 //Main===========================
 var main = function(){
 	var now = Date.now();
 	var delta = now - then;
-	loop();
+	init();
+	loop1();
+	loop2();
 	render();
 	then = now;
 	requestAnimationFrame(main);

@@ -9,8 +9,8 @@ app.get('/', function (req, res) {
 	res.sendfile( __dirname + '/front/login.html');
 });
 
-app.get('/g', function(req, res) {
-	res.sendfile( __dirname + '/front/canvas.html');
+app.get('/jquery',function(req, res){
+	res.sendfile( __dirname + '/back/jquery-1.11.1.js');
 });
 
 app.get('/canvas',function(req,res) {
@@ -22,21 +22,28 @@ app.get('/image',function(req,res) {
 app.get('/keyboard',function(req,res) {
 	res.sendfile( __dirname + '/front/game/keyboard.js');
 });
-app.get('/room/:num', function(req, res) {
+app.get('/:nick/room/:num', function(req, res) {
 	var num = req.params.num;
-	var addr = request.connection.remoteAddress;
-	if(room[num]===null){
-		room[num] = {
+	var nick = req.params.nick;
+	var addr = req.connection.remoteAddress;
+	if(rooms[num]==null){
+		rooms[num] = {
 			"player": 0,
 			"observer": 0,
 			"ready": 0,
-			"address": new Array()
-		}
+			"member": new Array()
+		};
+		rooms[num].member[addr] = {
+			"address": new Array(),
+			"nick": nick,
+			"master": true,
+			"pae": 0
+		};
 	}
-	room[num].address[room[num].player] = addr;
-	room[num].player<4?room[num].player++:room[num].obserber++;
-	//res.sendfile( __dirname + '/ready.html');
+	rooms[num].player<4?rooms[num].player++:rooms[num].obserber++;
+	res.sendfile( __dirname + '/front/canvas.html');
 });
+
 //Game================================================
 var rooms = new Array();
 
@@ -44,13 +51,6 @@ var io = require('socket.io')(http);
 io.on('connection',function(socket){
 	var address = socket.handshake.address;
 	console.log("connected: " + address);
-	socket.on('first',function(){
-		var room = {
-
-		};
-		rooms.push(room);
-	});
-	
 	socket.on('msg', function(msg){
     	console.log('message: ' + msg);
     });

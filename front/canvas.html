@@ -3,10 +3,50 @@
 <head>
 	<meta charset="utf-8">
 	<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+	<script src="/jquery"></script>
+	<style type="text/css">
+	body{
+		position: absolute;
+	}
+	#container{
+	 	width:860px;
+	 	height: 500px;
+	}
+	.inner{
+		display: inline-block;
+	}
+	#chat{
+		overflow-y: scroll;
+		border: 1px solid black;
+		height: 480px;
+		width: 200px;
+	}
 
+	</style>
+	<script>
+	$(document).ready(function(){
+		$('#container').css('margin-top',($(this).height()-$('#container').height())/2);
+		$('#container').css('margin-left',($(this).width()-$('#container').width())/2);
+		$(window).resize(function(){
+			$('#container').css('margin-top',($(this).height()-$('#container').height())/2);
+			$('#container').css('margin-left',($(this).width()-$('#container').width())/2);
+		});
+
+	});
+	</script>
 <body>
-	<canvas id="canvas" width="800" height="600" style="border:1px solid #c3c3c3"></canvas>
+	<div id="container">
+		<div>
+			<div class="inner" id="game">
+				<div>
+					<canvas id="canvas" width="640" height="480" style="border:1px solid #c3c3c3;"></canvas>
+				</div>
+			</div>
+			<div class="inner" id="chat">
+				
+			</div>
+		</div>
+	</div>
 	<script src="/canvas" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
