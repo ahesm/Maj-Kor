@@ -6,7 +6,7 @@ var jsonParser = bodyParser.json();
 var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 app.get('/', function (req, res) {
-	res.sendfile( __dirname + '/front/login.html');
+	res.sendfile( __dirname + '/front/canvas.html');
 });
 
 app.get('/jquery',function(req, res){
